@@ -1,0 +1,44 @@
+<ng-template #human let-node="node">
+  <div class="item" cdkDropList [id]="node.uId" [cdkDropListData]="node.children"
+    (cdkDropListDropped)="onDragDrop($event)" [cdkDropListConnectedTo]="connectedTo">
+    <div class="">
+      {{node.name}}
+    </div>
+    <ng-container *ngFor="let sub of node.children">
+      <ng-template
+        [ngTemplateOutlet]="sub.type === 'apple' ? apple : human"
+        [ngTemplateOutletContext]="{ node: sub }">
+      </ng-template>
+    </ng-container>
+  </div>
+
+</ng-template>
+
+<ng-template #apple let-node="node">
+  <div class="item" cdkDropList [id]="node.uId" [cdkDropListData]="node.children"
+    (cdkDropListDropped)="onDragDrop($event)" [cdkDropListConnectedTo]="connectedTo">
+    <div class="">
+      {{node.sorte}}
+    </div>
+    <ng-container *ngFor="let sub of node.children">
+      <ng-template
+        [ngTemplateOutlet]="sub.type === 'apple' ? apple : human"
+        [ngTemplateOutletContext]="{ node: sub }">
+      </ng-template>
+    </ng-container>
+  </div>
+
+</ng-template>
+
+
+<div class="item" cdkDropList [cdkDropListData]="root.children" (cdkDropListDropped)="onDragDrop($event)"
+  [id]="root.humanId" [cdkDropListConnectedTo]="connectedTo">
+
+  <ng-container *ngFor="let listItem of root.children">
+    <ng-template
+      [ngTemplateOutlet]="listItem.type === 'apple' ? apple : human"
+      [ngTemplateOutletContext]="{ node: listItem }">
+    </ng-template>
+  </ng-container>
+
+</div>
